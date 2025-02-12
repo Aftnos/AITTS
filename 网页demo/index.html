@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AITTS</title>
+    <!-- 引入Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- 引入自定义CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="loading">加载中...</div>
+    <div class="container">
+        <div class="settings-section">
+            <h1>API 设置</h1>
+            <div class="form-group">
+                <label for="apiUrl">API 地址(必填):</label>
+                <div class="input-group">
+                    <input type="text" id="apiUrl" class="form-control" placeholder="例如: http://127.0.0.1:20005/api/chat" value="https://ata.fkdk.ink/api/chat">
+                    <button class="btn btn-primary" onclick="fetchModels()">确定</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="yhid">用户ID (8位16进制字符串)(必填):</label>
+                <input type="text" id="yhid" class="form-control" placeholder="例如: 1a2b3c4d">
+            </div>
+            <div class="form-group">
+                <label for="model">LLM 模型(可选):</label>
+                <select id="model" class="form-control">
+                    <option value="">请选择模型</option>
+                </select>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" id="enableMemory" class="form-check-input" checked>
+                <label for="enableMemory" class="form-check-label">启用会话记忆</label>
+            </div>
+            <div class="form-group">
+                <label for="character">TTS 角色(可选):</label>
+                <select id="character" class="form-control">
+                    <option value="">请选择角色</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="emotion">TTS 情感(可选):</label>
+                <select id="emotion" class="form-control" disabled>
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="speed">语速(可选):</label>
+                <input type="text" id="speed" class="form-control" placeholder="默认: 1.0">
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" id="mergeAudio" class="form-check-input">
+                <label for="mergeAudio" class="form-check-label">语音合并输出</label>
+            </div>
+            <!-- 可选：语言选择 -->
+            <div class="form-group">
+                <label for="language">语音识别语言(可选):</label>
+                <input type="text" id="language" class="form-control" placeholder="例如: zh">
+            </div>
+        </div>
+        <div class="chat-section">
+            <div class="chat-header">胡桃</div>
+            <div class="chat-section-content" id="chatSectionContent"></div>
+            <div class="input-form">
+                <!-- 语音录制按钮 -->
+                <button id="recordButton" class="record-button" onclick="toggleRecording(this)">
+                    <!-- 图标和文字将在JavaScript中初始化 -->
+                </button>
+                <input type="text" id="question" class="form-control" placeholder="请输入问题">
+                <div class="button-group">
+                    <button onclick="callApi()" class="btn btn-primary">发送</button>
+                    <!-- 上传语音按钮 -->
+                    <label class="btn btn-secondary asr-label" for="asrInput">上传语音</label>
+                    <input type="file" id="asrInput" accept="audio/*" onchange="handleAsrUpload(event)">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 引入自定义JavaScript -->
+    <script src="js/scripts.js"></script>
+</body>
+</html>
