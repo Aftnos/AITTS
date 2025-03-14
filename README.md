@@ -4,7 +4,7 @@
 
 ## 📦项目简介
 
-AITTS是一个专为本地化大模型语音端到语音端交互实现探索。使用Python对ollama和GSVI TTS和whisper进行封装聚合成API，实现了可全本地部署的语音智能交互。
+AITTS是一个专为本地化大模型语音端到语音端交互实现的简单探索。使用Python对ollama和GSVI TTS和whisper进行封装聚合成API，实现了可全本地部署的语音智能交互。
 
 ## 功能概述
 
