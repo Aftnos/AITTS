@@ -18,26 +18,28 @@ AITTS是一个专为本地化大模型语音端到语音端交互实现探索。
 
 ## 环境依赖
 
-本工具基于 Python 3 开发，使用了以下依赖库：
+本工具基于 Python 3.8以上 开发，使用了以下依赖库：
+whisper python库
 
-忘了，后续补充
+其他忘了，后续补充
 
 ### 安装依赖
 
-PATH开放ollama连接端口，安装whisper python库，安装GSVI TTS
+注意：PATH开放ollama连接端口，安装whisper python库，安装GSVI TTS
     
 ##🚀使用说明
 
 ### 1. 启动工具
 
-启动ollama和GSVI TTS
+启动你的ollama和GSVI TTS
+先测试这俩的API是否开放（本地开放即可除非服务端不同）
 以下我自己使用的启动cmd（根据自己项目位置来，我加Frp的）
 ```bash
 @echo off
 rem 启动 run.bat
 start "" cmd /c "cd /d E:\ai\GPT-SoVITS-Inference && run.bat"
 
-rem 切换到 E:\ai\api 路径并启动 ok5.py 脚本
+rem 切换到 E:\ai\api 路径并启动 ok6.py 脚本
 start "" cmd /c "cd /d E:\ai\api\api_run && E:\ai\api\api_run\.venv\Scripts\python.exe E:\ai\api\api_run\ok6.py"
 
 start "" cmd /c ollama run qwen2.5:7b
@@ -45,7 +47,7 @@ start "" cmd /c ollama run qwen2.5:7b
 start "" cmd /c "cd /d C:\Users\alyfk\Desktop\frp && run.cmd"
 ```
 
-启动OK.py，然后就可以看到端口和ip，然后运行demo即可
+启动OK.py，然后就可以看到端口和ip，然后运行demo即可（用户ID用于保存个人聊天记录）
 
 ## 计划
 
