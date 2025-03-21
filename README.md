@@ -4,7 +4,7 @@
 
 ## 📦项目简介
 
-AITTS是一个专为本地化大模型语音端到语音端低延时交互实现的简单探索。使用Python对ollama和GSVI TTS和whisper进行封装聚合成API，实现了可全本地部署的语音智能交互。
+AITTS是一个专为本地化大模型语音端到语音端低延时交互实现的简单探索。使用Python对ollama和GSVI TTS和whisper进行封装聚合成API，实现了可全本地部署的语音智能交互。本项目全部代码由AI完成，这是一个实验项目。本项目目前处于初始阶段，会逐步转型为全智能交互场景的智能陪护，接入VLM等多模态，请拭目以待！
 
 ## 功能概述
 
@@ -21,14 +21,20 @@ Demo网页地址 https://aitts.fkdk.ink
 
 本工具基于 Python 3.8以上 开发，使用了以下依赖库：
 whisper python库
+ollama库（非必选，没有实际运用）
 
-其他忘了，后续补充
+后续补充
 
 ### 安装依赖
 
-注意：PATH开放ollama连接端口，安装whisper python库，安装GSVI TTS
+注意：
+1.PATH开放ollama连接端口。
+2.安装whisper python库。
+3.安装GSVI TTS
     
 ##🚀使用说明
+
+注意，启用HTTPS请配置好证书文件！
 
 ### 1. 启动工具
 
@@ -52,7 +58,13 @@ start "" cmd /c "cd /d C:\Users\alyfk\Desktop\frp && run.cmd"
 
 ## 计划
 
-后续看喜欢就给个star，有需求给个issue，看心情写
+计划多端融合
+1.支持对OpenAI的标准接口实现云端模型支持
+2.实现工具的调用（当前时间、计算器、联网搜索等）
+3.实现长记忆（使用模型对对话内容进行处理存储为长期记忆）
+4.多端接入，逐步开发STM32、ESP32等单片接入接口实现物理硬件
+5.实现物联控制，通过米家开源接口，使智能家居能完全接入智能控制（这真智能 雷军star!）
+6.实现拟人化陪伴功能，完整打通VLM-LLM-长记忆-长思维-智能工具控制，实现最终效果：智能化陪护，智能化控制！
 
 ## 贡献
 
@@ -64,8 +76,4 @@ start "" cmd /c "cd /d C:\Users\alyfk\Desktop\frp && run.cmd"
 
 ## 联系方式
 
-如果您有任何问题或建议，请联系 [Aftnos](https://github.com/Aftnos)。
-
-## 其他信息
-![Star history chart](https://api.star-history.com/svg?repos=Aftnos/AITTSn&type=Date)
----
+如果您有任何问题或建议，请联系 [Aftnos](https://github.com/Aftnos)。邮箱：alyfk@qq.com
