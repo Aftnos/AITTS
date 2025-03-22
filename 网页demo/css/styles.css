@@ -1,0 +1,245 @@
+/* styles.css */
+
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1000px;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.settings-section {
+    flex: 1;
+    padding-right: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.chat-section {
+    flex: 2;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chat-header {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.chat-section-content {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    max-height: 500px;
+}
+
+.message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.message.bot {
+    justify-content: flex-start;
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 15px;
+    position: relative;
+    word-wrap: break-word;
+}
+
+.message-bubble.user {
+    background-color: #dcf8c6;
+    border-top-right-radius: 0;
+    margin-right: 10px;
+}
+
+.message-bubble.bot {
+    background-color: #ffffff;
+    border-top-left-radius: 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-left: 10px;
+}
+
+.audio-section {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 15px;
+    border-top-left-radius: 0;
+    margin-top: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    max-width: 70%;
+    margin-left: 10px;
+}
+
+.audio-section span {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.audio-section img {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+}
+
+.input-form {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.input-form input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+}
+
+.button-group button,
+.button-group .asr-label {
+    margin-right: 10px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+#loading {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .settings-section {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 20px;
+    }
+    .chat-section {
+        padding-left: 0;
+    }
+    .input-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .input-form button,
+    .input-form .record-button,
+    .button-group button,
+    .button-group .asr-label {
+        margin-top: 10px;
+        margin-right: 0;
+    }
+    .button-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .button-group button,
+    .button-group .asr-label {
+        width: 100%;
+        text-align: center;
+    }
+    .asr-label {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* 更新后的选择器，用于隐藏 .button-group 内的文件输入 */
+.button-group input[type="file"] {
+    display: none;
+}
+
+/* 保持 .asr-label 样式 */
+.asr-label {
+    display: inline-block;
+    padding: 0.375rem 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.asr-label:hover {
+    background-color: #0056b3;
+}
+
+/* 语音录制按钮样式 */
+.record-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem;
+    background-color: #dc3545;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+.record-button.recording {
+    background-color: #6c757d;
+}
+
+.record-button:hover {
+    background-color: #c82333;
+}
+
+.record-button.recording:hover {
+    background-color: #5a6268;
+}
+
+.record-button svg {
+    width: 20px;
+    height: 20px;
+}
