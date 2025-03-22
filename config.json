@@ -1,0 +1,28 @@
+{
+    "MODEL_API_URL": "http://localhost:11434/api/generate",
+    "__comment_MODEL_API_URL": "模型 API 的 URL",
+    "MODEL_LIST_URL": "http://localhost:11434/api/tags",
+    "__comment_MODEL_LIST_URL": "LLM 模型列表的 URL",
+    "TTS_URL": "http://127.0.0.1:5000/tts",
+    "__comment_TTS_URL": "TTS 服务的基础 URL，不包含参数",
+    "TTS_LIST_URL": "http://127.0.0.1:5000/character_list",
+    "__comment_TTS_LIST_URL": "TTS 模型列表的 URL",
+    "TTS_PARAMS": {
+        "stream": "true",
+        "character": "花火",
+        "emotion": "平常",
+        "speed": "1.0",
+        "batch_size": "100"
+    },
+    "__comment_TTS_PARAMS": "TTS 服务的默认参数，可在此处设置默认角色、情感、语速等",
+    "DEFAULT_LLM_MODEL": "qwen2.5:7b",
+    "__comment_DEFAULT_LLM_MODEL": "默认的 LLM 模型名称",
+    "ASR_MODEL_PATH": "E:\\ai\\FunAsr_Faster_Whisper_Multi_Subs\\faster-whisper-large-v3-turbo-ct2",
+    "__comment_ASR_MODEL_PATH": "faster_whisper ASR 模型的本地路径",
+    "ASR_MODEL_SIZE": "large-v3-turbo-ct2",
+    "__comment_ASR_MODEL_SIZE": "ASR 模型的大小，如 tiny, base, small, medium, large",
+    "API_PORT": 20005,
+    "__comment_API_PORT": "Flask 服务器的端口号",
+    "OTHER_CONFIG": "value",
+    "__comment_OTHER_CONFIG": "其他配置参数的说明"
+}
