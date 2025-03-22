@@ -73,6 +73,8 @@
 ## 📸 截图
 
 ![项目截图](https://github.com/user-attachments/assets/f1c85337-e3a6-4073-8663-64bd7806d984)
+![项目GIF](https://github.com/user-attachments/assets/53f82963-aa42-4ee2-b58f-3c2fbc86d785)
+![项目截图2](https://github.com/user-attachments/assets/48065544-fb11-4904-9ab7-3b28fc0914cb)
 
 Demo 网页地址：[https://aitts.fkdk.ink](https://aitts.fkdk.ink)
 
