@@ -39,16 +39,17 @@
 
 1. **启动前准备**  
    - 确保本地环境安装了 Python 3.8 以上版本。  
-   - 安装项目依赖：`pip install -r requirements.txt`（请在 requirements.txt 中列出所有依赖）。  
-   - 配置各个服务的访问地址，如模型 API、TTS 服务等，修改 `config.json` 文件中的参数。
+   - 安装项目依赖：`pip install -r requirements.txt`。  
+   - 配置各个服务的访问地址，开放端口、Ollama、GSVI TTS地址，修改 `config.json` 文件中的参数。
 
 2. **启动服务**  
    - 启动 Ollama 和 GSVI TTS 服务，并确认各自 API 接口可用。  
-   - 启动本项目的 API 服务，运行启动脚本（例如：`python app.py`），服务将监听配置中指定的端口。
+   - >注意：请测试ollama API接口是否可用，不可用请添加PATH环境变量开放ollama API。
+   - 启动本项目的 API 服务，运行启动脚本`python app.py`，服务将监听配置中指定的端口。
 
-3. **测试交互**  
-   - 使用 Demo 网页或 API 调用工具测试语音识别、文本交互和 TTS 合成等功能。  
-   - 每个用户的对话记录均通过唯一的用户 ID（8位 16 进制字符串）进行管理。
+3. **使用注意**  
+   - >网页使用录音请打开HTTPS，否则无法录音，使用HTTPS时Flask请配置SSL证书（证书不对的时候请先直接访问IP信任证书再使用API）。
+   - >每个用户的对话记录由ID方式记录（8位 16 进制字符串）进行管理。
 
 ## 🔮 项目规划
 
