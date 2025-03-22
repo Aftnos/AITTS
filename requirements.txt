@@ -1,0 +1,6 @@
+Flask
+flask-cors
+requests
+faster-whisper
+torch
+opencc
