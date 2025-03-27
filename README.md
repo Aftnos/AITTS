@@ -2,7 +2,7 @@
 
 ![AITTS](https://socialify.git.ci/Aftnos/AITTS/image?description=1&font=Jost&forks=1&issues=1&language=1&logo=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F128480098&name=1&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Dark)  
 
-## 📦 项目简介
+## 📦 项目简介 [English Document](https://github.com/Aftnos/AITTS/blob/main/README-EN.md)
 
 **AITTS** 是一个专为本地化大模型语音端到语音端低延时交互而设计的实验性项目。它将语音识别（ASR）、大语言模型（LLM）交互以及语音合成（TTS）功能整合在一起，支持全本地部署。项目核心依赖于 Python 语言，基于 [whisper](https://github.com/openai/whisper) 进行语音识别，利用 [GSVI TTS](#) 实现语音合成，并对 Ollama 模型进行封装聚合，打造低延时、智能化的语音交互体验。本项目全部代码由AI完成，本项目目前处于初始阶段，会逐步转型为全智能交互场景的智能陪护，接入VLM等多模态，请拭目以待！
 
