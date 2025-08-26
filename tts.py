@@ -52,22 +52,32 @@ class TTSClient:
         """
         将 WAV 音频字节流从 32k 采样率转换为 16k。
         若输入音频采样率已为 16k，则直接返回。
-        """
-        with wave.open(io.BytesIO(audio_bytes), 'rb') as wf:
-            nchannels = wf.getnchannels()
-            sampwidth = wf.getsampwidth()
-            framerate = wf.getframerate()
-            frames = wf.readframes(wf.getnframes())
 
-        if framerate == 16000:
+        如果输入数据不是 WAV 或转换失败，则返回原始音频数据，避免输出损坏的音频。
+        """
+        # 确认是 WAV 文件
+        if not (audio_bytes.startswith(b"RIFF") and audio_bytes[8:12] == b"WAVE"):
             return audio_bytes
 
-        converted_frames, _ = audioop.ratecv(frames, sampwidth, nchannels, framerate, 16000, None)
-        out_buf = io.BytesIO()
-        with wave.open(out_buf, 'wb') as wf_out:
-            wf_out.setnchannels(nchannels)
-            wf_out.setsampwidth(sampwidth)
-            wf_out.setframerate(16000)
-            wf_out.writeframes(converted_frames)
+        try:
+            with wave.open(io.BytesIO(audio_bytes), 'rb') as wf:
+                nchannels = wf.getnchannels()
+                sampwidth = wf.getsampwidth()
+                framerate = wf.getframerate()
+                frames = wf.readframes(wf.getnframes())
 
-        return out_buf.getvalue()
+            if framerate == 16000:
+                return audio_bytes
+
+            converted_frames, _ = audioop.ratecv(frames, sampwidth, nchannels, framerate, 16000, None)
+            out_buf = io.BytesIO()
+            with wave.open(out_buf, 'wb') as wf_out:
+                wf_out.setnchannels(nchannels)
+                wf_out.setsampwidth(sampwidth)
+                wf_out.setframerate(16000)
+                wf_out.writeframes(converted_frames)
+
+            return out_buf.getvalue()
+        except (wave.Error, audioop.error) as e:
+            print(f"音频转换失败: {e}")
+            return audio_bytes
