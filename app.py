@@ -39,7 +39,6 @@ def chat():
     llm_model = req_data.get('llm_model')
     enable_memory = req_data.get('enable_memory', True)
     extra_tts_params = req_data.get('tts_params', {})
-    convert_to_16k = req_data.get('convert_to_16k', False)
     yhid = req_data.get('yhid')
 
     if not user_input:
@@ -50,7 +49,7 @@ def chat():
         return jsonify({"error": "yhid 格式错误，应为8位16进制字符串"}), 400
 
     return process_chat_request(user_input, yhid, MODEL_API_URL, DEFAULT_LLM_MODEL,
-                                enable_memory, tts_client, extra_tts_params, convert_to_16k)
+                                enable_memory, tts_client, extra_tts_params)
 
 @app.route('/api/asr', methods=['POST'])
 def asr():
@@ -64,7 +63,6 @@ def asr():
     llm_model = request.form.get('llm_model')
     enable_memory = request.form.get('enable_memory', 'true').lower() == 'true'
     tts_params_str = request.form.get('tts_params', '{}')
-    convert_to_16k = request.form.get('convert_to_16k', 'false').lower() == 'true'
     try:
         extra_tts_params = json.loads(tts_params_str)
     except json.JSONDecodeError:
@@ -81,7 +79,7 @@ def asr():
     try:
         transcription, info = asr_processor.transcribe(audio_file, language, beam_size, task)
         return process_chat_request(transcription, yhid, MODEL_API_URL, DEFAULT_LLM_MODEL,
-                                    enable_memory, tts_client, extra_tts_params, convert_to_16k)
+                                    enable_memory, tts_client, extra_tts_params)
     except Exception as e:
         return jsonify({"error": f"ASR 转写失败：{e}"}), 500
 
