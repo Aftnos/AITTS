@@ -3,6 +3,7 @@ import json
 import base64
 import requests
 import io
+import logging
 import soundfile as sf
 import resampy
 
@@ -19,10 +20,9 @@ class TTSClient:
         if extra_params:
             params.update(extra_params)
         params['text'] = text
+        logger = logging.getLogger(__name__)
         try:
-            print("即将发送的 TTS 请求参数:")
-            print(f"URL: {self.base_url}")
-            print(f"参数: {params}")
+            logger.info("TTS 请求: url=%s, params=%s", self.base_url, params)
             response = requests.get(self.base_url, params=params, stream=True)
             response.raise_for_status()
             audio_data = b''.join(response.iter_content(chunk_size=4096))
@@ -37,10 +37,10 @@ class TTSClient:
                         sf.write(output_buffer, data_16k, 16000, format='WAV')
                         audio_data = output_buffer.getvalue()
                 except Exception as e:
-                    print(f"音频重采样失败：{e}")
+                    logger.error("音频重采样失败：%s", e)
             return audio_data
         except requests.exceptions.RequestException as e:
-            print(f"TTS 服务请求失败：{e}")
+            logger.error("TTS 服务请求失败：%s", e)
             return None
 
     def get_audio_base64(self, text, extra_params=None, convert_to_16k=False):

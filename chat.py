@@ -2,10 +2,12 @@
 import json
 import re
 import requests
+import logging
 from flask import Response, stream_with_context, jsonify
 
 # 全局会话上下文（可考虑使用更复杂的存储方案）
 conversation_contexts = {}
+logger = logging.getLogger(__name__)
 
 def process_chat_request(user_input, yhid, MODEL_API_URL, DEFAULT_LLM_MODEL,
                          enable_memory=True, tts_client=None, extra_tts_params={},
@@ -25,8 +27,7 @@ def process_chat_request(user_input, yhid, MODEL_API_URL, DEFAULT_LLM_MODEL,
     if enable_memory and conversation_context is not None:
         data['context'] = conversation_context
 
-    print(f"用户 {yhid} 请求数据:")
-    print(json.dumps(data, indent=4, ensure_ascii=False))
+    logger.info("用户 %s 请求数据: %s", yhid, json.dumps(data, ensure_ascii=False))
 
     try:
         response = requests.post(MODEL_API_URL, json=data, stream=True)
@@ -76,6 +77,6 @@ def process_chat_request(user_input, yhid, MODEL_API_URL, DEFAULT_LLM_MODEL,
                             }, ensure_ascii=False) + '\n'
                         break
                 except json.JSONDecodeError:
-                    print(f"无法解析的响应行: {line}")
+                    logger.warning("无法解析的响应行: %s", line)
 
     return Response(stream_with_context(generate()), mimetype='application/json; charset=utf-8')

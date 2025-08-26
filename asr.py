@@ -3,6 +3,7 @@ import os
 import tempfile
 import json
 import re
+import logging
 import opencc
 import torch
 import wave
@@ -14,6 +15,7 @@ t2s = opencc.OpenCC('t2s.json')
 class ASRProcessor:
     def __init__(self, model_path, model_size):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.logger = logging.getLogger(__name__)
         try:
             self.model = WhisperModel(
                 model_size_or_path=model_path,
@@ -21,9 +23,9 @@ class ASRProcessor:
                 compute_type="float16",
                 local_files_only=True
             )
-            print("ASR 模型加载完成。")
+            self.logger.info("ASR 模型加载完成。")
         except Exception as e:
-            print(f"ASR 模型加载失败：{e}")
+            self.logger.error("ASR 模型加载失败：%s", e)
             self.model = None
 
     def transcribe(self, audio_file, language=None, beam_size=5, task='transcribe'):

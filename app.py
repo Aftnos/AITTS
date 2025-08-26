@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import re
 import json
+import logging
 
 from config import load_config
 from asr import ASRProcessor
@@ -25,8 +26,10 @@ API_PORT = config.get("API_PORT")
 app = Flask(__name__)
 CORS(app)
 
+logger = logging.getLogger(__name__)
+
 # 初始化 ASR 模型
-print("正在加载 ASR 模型，请稍候...")
+logger.info("正在加载 ASR 模型，请稍候...")
 asr_processor = ASRProcessor(ASR_MODEL_PATH, ASR_MODEL_SIZE)
 
 # 初始化 TTS 客户端
