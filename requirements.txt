@@ -4,3 +4,4 @@ requests
 faster-whisper
 torch
 opencc
+colorama

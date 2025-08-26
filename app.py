@@ -8,6 +8,7 @@ from config import load_config
 from asr import ASRProcessor
 from tts import TTSClient
 from chat import process_chat_request
+from logger import log
 
 # 加载配置
 config = load_config()
@@ -26,7 +27,7 @@ app = Flask(__name__)
 CORS(app)
 
 # 初始化 ASR 模型
-print("正在加载 ASR 模型，请稍候...")
+log("APP", "INFO", "正在加载 ASR 模型，请稍候...")
 asr_processor = ASRProcessor(ASR_MODEL_PATH, ASR_MODEL_SIZE)
 
 # 初始化 TTS 客户端
@@ -104,4 +105,5 @@ def get_llm_models():
         return jsonify({"error": f"获取 LLM 模型列表失败：{e}"}), 500
 
 if __name__ == '__main__':
+    log("APP", "INFO", f"API 服务启动，端口：{API_PORT}")
     app.run(host='0.0.0.0', port=API_PORT, threaded=True, ssl_context=('cert.pem', 'key.pem'))
