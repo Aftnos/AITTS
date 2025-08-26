@@ -37,6 +37,23 @@ class ASRProcessor:
             audio_path = tmp.name
         log("ASR", "DEBUG", f"临时音频文件: {audio_path}")
 
+        # 检查并输出输入音频的参数
+        try:
+            with wave.open(audio_path, 'rb') as wf:
+                sample_rate = wf.getframerate()
+                channels = wf.getnchannels()
+                sample_width = wf.getsampwidth() * 8
+                comptype = wf.getcomptype()
+                compname = wf.getcompname()
+                log(
+                    "ASR",
+                    "INFO",
+                    f"输入音频信息: channels={channels}, sample_rate={sample_rate}, "
+                    f"sample_width={sample_width}bit, comptype={comptype} ({compname})",
+                )
+        except wave.Error as e:
+            log("ASR", "ERROR", f"无法读取音频参数: {e}")
+
         try:
             log("ASR", "DEBUG", f"开始转写，language={language}, beam_size={beam_size}, task={task}")
             segments, info = self.model.transcribe(

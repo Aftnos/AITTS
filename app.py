@@ -57,6 +57,7 @@ def asr():
     if 'audio' not in request.files:
         return jsonify({"error": "未提供音频文件"}), 400
     audio_file = request.files['audio']
+    log("APP", "INFO", f"收到音频文件: filename={audio_file.filename}, content_type={audio_file.content_type}, length={getattr(audio_file, 'content_length', 'unknown')}")
     language = request.form.get('language')
     beam_size = int(request.form.get('beam_size', 5))
     task = request.form.get('task', 'transcribe')

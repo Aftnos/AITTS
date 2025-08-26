@@ -2,6 +2,8 @@
 import json
 import base64
 import requests
+import wave
+import io
 from logger import log
 
 class TTSClient:
@@ -24,7 +26,24 @@ class TTSClient:
             response = requests.get(self.base_url, params=params, stream=True)
             response.raise_for_status()
             audio_data = b''.join(response.iter_content(chunk_size=4096))
-            log("TTS", "INFO", f"TTS 请求成功，返回 {len(audio_data)} 字节")
+            content_type = response.headers.get('Content-Type', 'unknown')
+            log("TTS", "INFO", f"TTS 请求成功，返回 {len(audio_data)} 字节，Content-Type: {content_type}")
+            # 检查并输出返回音频的参数
+            try:
+                with wave.open(io.BytesIO(audio_data), 'rb') as wf:
+                    sample_rate = wf.getframerate()
+                    channels = wf.getnchannels()
+                    sample_width = wf.getsampwidth() * 8
+                    comptype = wf.getcomptype()
+                    compname = wf.getcompname()
+                    log(
+                        "TTS",
+                        "INFO",
+                        f"输出音频信息: channels={channels}, sample_rate={sample_rate}, "
+                        f"sample_width={sample_width}bit, comptype={comptype} ({compname})",
+                    )
+            except wave.Error as e:
+                log("TTS", "ERROR", f"无法解析 TTS 音频数据: {e}")
             return audio_data
         except requests.exceptions.RequestException as e:
             log("TTS", "ERROR", f"TTS 服务请求失败：{e}")
