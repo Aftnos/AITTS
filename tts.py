@@ -17,11 +17,18 @@ class TTSClient:
         logger = logging.getLogger(__name__)
         try:
             with io.BytesIO(audio_bytes) as input_buffer:
-                data, sr = sf.read(input_buffer)
-            if sr != 16000 and getattr(data, "size", 0) > 0:
-                data_16k = resampy.resample(data, sr, 16000)
+                data, sr = sf.read(input_buffer, always_2d=True)
+            if sr != 16000 and data.size > 0:
+                # Resample along the time axis to preserve channel dimensions
+                data_16k = resampy.resample(data.T, sr, 16000).T
                 output_buffer = io.BytesIO()
-                sf.write(output_buffer, data_16k, 16000, format="WAV")
+                sf.write(
+                    output_buffer,
+                    data_16k,
+                    16000,
+                    format="WAV",
+                    subtype="PCM_16",
+                )
                 audio_bytes = output_buffer.getvalue()
         except Exception as e:
             logger.error("音频重采样失败：%s", e)
@@ -32,8 +39,8 @@ class TTSClient:
         logger = logging.getLogger(__name__)
         try:
             with io.BytesIO(audio_bytes) as buf:
-                _, sr = sf.read(buf)
-            return sr == 16000
+                with sf.SoundFile(buf) as f:
+                    return f.samplerate == 16000
         except Exception as e:
             logger.error("采样率检查失败：%s", e)
             return False
