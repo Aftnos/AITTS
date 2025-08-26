@@ -2,6 +2,7 @@
 import json
 import base64
 import requests
+from logger import log
 
 class TTSClient:
     def __init__(self, base_url, default_params):
@@ -17,15 +18,16 @@ class TTSClient:
             params.update(extra_params)
         params['text'] = text
         try:
-            print("即将发送的 TTS 请求参数:")
-            print(f"URL: {self.base_url}")
-            print(f"参数: {params}")
+            log("TTS", "INFO", "即将发送 TTS 请求")
+            log("TTS", "INFO", f"URL: {self.base_url}")
+            log("TTS", "DEBUG", f"参数: {params}")
             response = requests.get(self.base_url, params=params, stream=True)
             response.raise_for_status()
             audio_data = b''.join(response.iter_content(chunk_size=4096))
+            log("TTS", "INFO", f"TTS 请求成功，返回 {len(audio_data)} 字节")
             return audio_data
         except requests.exceptions.RequestException as e:
-            print(f"TTS 服务请求失败：{e}")
+            log("TTS", "ERROR", f"TTS 服务请求失败：{e}")
             return None
 
     def get_audio_base64(self, text, extra_params=None):

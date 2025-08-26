@@ -1,6 +1,7 @@
 # config.py
 import os
 import json
+from logger import log
 
 CONFIG_FILE = 'config.json'
 
@@ -37,7 +38,7 @@ def create_default_config():
     """生成默认配置文件。"""
     with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
         json.dump(default_config, f, ensure_ascii=False, indent=4)
-    print("已生成默认的 config.json 文件，请根据需要修改配置。")
+    log("CONFIG", "INFO", "已生成默认的 config.json 文件，请根据需要修改配置。")
 
 def load_config():
     """加载配置文件，忽略以 '__comment' 开头的键。"""
@@ -51,4 +52,4 @@ def load_config():
 if __name__ == '__main__':
     # 仅用于测试配置加载
     config = load_config()
-    print("配置加载成功：", config)
+    log("CONFIG", "INFO", f"配置加载成功: {config}")

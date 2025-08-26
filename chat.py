@@ -3,6 +3,7 @@ import json
 import re
 import requests
 from flask import Response, stream_with_context, jsonify
+from logger import log
 
 # 全局会话上下文（可考虑使用更复杂的存储方案）
 conversation_contexts = {}
@@ -24,8 +25,7 @@ def process_chat_request(user_input, yhid, MODEL_API_URL, DEFAULT_LLM_MODEL,
     if enable_memory and conversation_context is not None:
         data['context'] = conversation_context
 
-    print(f"用户 {yhid} 请求数据:")
-    print(json.dumps(data, indent=4, ensure_ascii=False))
+    log("CHAT", "INFO", f"用户 {yhid} 请求数据: {json.dumps(data, ensure_ascii=False)}")
 
     try:
         response = requests.post(MODEL_API_URL, json=data, stream=True)
@@ -69,8 +69,9 @@ def process_chat_request(user_input, yhid, MODEL_API_URL, DEFAULT_LLM_MODEL,
                                 "text": sentence_buffer,
                                 "audio": audio_str
                             }, ensure_ascii=False) + '\n'
+                        log("CHAT", "INFO", f"用户 {yhid} 生成文本: {generated_text}")
                         break
                 except json.JSONDecodeError:
-                    print(f"无法解析的响应行: {line}")
+                    log("CHAT", "WARNING", f"无法解析的响应行: {line}")
 
     return Response(stream_with_context(generate()), mimetype='application/json; charset=utf-8')
