@@ -4,3 +4,5 @@ requests
 faster-whisper
 torch
 opencc
+soundfile
+resampy

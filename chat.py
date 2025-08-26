@@ -8,7 +8,8 @@ from flask import Response, stream_with_context, jsonify
 conversation_contexts = {}
 
 def process_chat_request(user_input, yhid, MODEL_API_URL, DEFAULT_LLM_MODEL,
-                         enable_memory=True, tts_client=None, extra_tts_params={}):
+                         enable_memory=True, tts_client=None, extra_tts_params={},
+                         convert_to_16k=False):
     """
     处理聊天请求：调用 LLM 模型 API，按句分割后调用 TTS 生成语音数据，返回流式响应。
     """
@@ -49,7 +50,9 @@ def process_chat_request(user_input, yhid, MODEL_API_URL, DEFAULT_LLM_MODEL,
                     sentences = re.split(r'([。！？])', sentence_buffer)
                     for i in range(0, len(sentences) - 1, 2):
                         sentence = sentences[i] + sentences[i + 1]
-                        audio_str = tts_client.get_audio_base64(sentence, extra_tts_params) if tts_client else ""
+                        audio_str = tts_client.get_audio_base64(
+                            sentence, extra_tts_params, convert_to_16k
+                        ) if tts_client else ""
                         yield json.dumps({
                             "text": sentence,
                             "audio": audio_str
@@ -64,7 +67,9 @@ def process_chat_request(user_input, yhid, MODEL_API_URL, DEFAULT_LLM_MODEL,
                             conversation_context = None
                             conversation_contexts[yhid] = None
                         if sentence_buffer:
-                            audio_str = tts_client.get_audio_base64(sentence_buffer, extra_tts_params) if tts_client else ""
+                            audio_str = tts_client.get_audio_base64(
+                                sentence_buffer, extra_tts_params, convert_to_16k
+                            ) if tts_client else ""
                             yield json.dumps({
                                 "text": sentence_buffer,
                                 "audio": audio_str
