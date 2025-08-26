@@ -28,13 +28,16 @@ class TTSClient:
             audio_data = b''.join(response.iter_content(chunk_size=4096))
 
             if convert_to_16k:
-                with io.BytesIO(audio_data) as input_buffer:
-                    data, sr = sf.read(input_buffer)
-                if sr != 16000:
-                    data_16k = resampy.resample(data, sr, 16000)
-                    output_buffer = io.BytesIO()
-                    sf.write(output_buffer, data_16k, 16000, format='WAV')
-                    audio_data = output_buffer.getvalue()
+                try:
+                    with io.BytesIO(audio_data) as input_buffer:
+                        data, sr = sf.read(input_buffer)
+                    if sr != 16000 and getattr(data, 'size', 0) > 0:
+                        data_16k = resampy.resample(data, sr, 16000)
+                        output_buffer = io.BytesIO()
+                        sf.write(output_buffer, data_16k, 16000, format='WAV')
+                        audio_data = output_buffer.getvalue()
+                except Exception as e:
+                    print(f"音频重采样失败：{e}")
             return audio_data
         except requests.exceptions.RequestException as e:
             print(f"TTS 服务请求失败：{e}")
